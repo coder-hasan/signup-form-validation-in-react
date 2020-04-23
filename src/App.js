@@ -1,26 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
+import 'bootstrap/dist/css/bootstrap.css'
 import './App.css';
+import SignUp from './Components/signUp'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component{
+
+  state = {
+    users: []
+  }
+
+  createUser = user => {
+    user.id = new Date().getTime().toString()
+    this.setState({
+      users: [...this.state.users, user]
+    })
+  }
+
+  render(){
+    return (
+      <div className="App">
+        <SignUp createUser={this.createUser}></SignUp>
+        <div>
+          <h3 className="my-5 text-center">Register Users</h3>
+          <ul className="list-group">
+            {this.state.users.map(user => <li key={user.id} className="list-group-item">
+              {user.name} -> {user.email}
+            </li>)}
+          </ul>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
